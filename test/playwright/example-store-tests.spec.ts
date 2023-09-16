@@ -136,33 +136,10 @@ test.describe('Адаптивность верстки', () => {
 test.describe('Отображение информации о товарах в каталоге и на странице Details', () => {
 
     test('в каталоге должны отображаться товары, список которых приходит с сервера', async ({ page }) => {
-        await page.route('http://localhost:3000/hw/store/api/products', async (route) => {
-            const json = [{
-                        id: 0,
-                        name: 'test axios1',
-                        price: 123,
-
-                    }, {
-                        id: 1,
-                        name: '2test axios1',
-                        price: 223,
-
-                    }, {
-                        id: 3,
-                        name: '3test axios1',
-                        price: 323,
-                    },
-                    ]
-            await route.fulfill({ json });
-        });
-
         const exampleStore = new ExampleStore(page);
         await exampleStore.gotoCatalogPage();
-        await page.pause();
         const count = await exampleStore.itemCards.count();
-
-        await page.pause();
-        expect(count).toBe(3);
+        expect(count).toBe(17);
     });
 
     test('для каждого товара в каталоге отображается название, цена и ссылка на страницу с подробной информацией о товаре', async ({ page }) => {
@@ -181,6 +158,7 @@ test.describe('Отображение информации о товарах в 
     });
 
     // test('', async({page}) => {
+    // await page.pause();
 
     // });
 

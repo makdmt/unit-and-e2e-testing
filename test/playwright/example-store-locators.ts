@@ -1,5 +1,7 @@
 import { test, expect, type Page, type Locator } from '@playwright/test';
 
+import { mockedProducts } from '../mockedProducts';
+
 export const baseUrl = 'http://localhost:3000/hw/store';
 
 export class ExampleStore {
@@ -100,23 +102,27 @@ export class ExampleStore {
 
 
     async gotoMainPage() {
-        await this.page.goto('http://localhost:3000/hw/store');
+        await this.page.goto(baseUrl);
     }
 
     async gotoCatalogPage() {
-        // await this.headerLinkToCatalog.click();
-        await this.page.goto('http://localhost:3000/hw/store/catalog');
+        //mocked Data for Catalog Page
+        await this.page.route(`${baseUrl}/api/products`, async (route) => {
+            const json = mockedProducts;
+            await route.fulfill({ json });
+        });
+        await this.page.goto(`${baseUrl}/catalog`);
     }
 
     async gotoItemDetailsPage() {
-        await this.page.goto('http://localhost:3000/hw/store/catalog/0');
+        await this.page.goto(`${baseUrl}/catalog/0`);
     }
 
     async gotoCartPage() {
-        await this.page.goto('http://localhost:3000/hw/store/cart');
+        await this.page.goto(`${baseUrl}/cart`);
     }
 
-    async checkCatalogItemPropeties(index) {
+    async checkCatalogItemPropeties(index: number) {
         await expect(this.cardNames.nth(index)).not.toBeEmpty();
         await expect(this.cardPrices.nth(index)).not.toBeEmpty();
         await expect(this.cardLinks.nth(index)).not.toBeEmpty();
@@ -131,7 +137,7 @@ export class ExampleStore {
         await expect(this.page.locator('.ProductDetails-AddToCart')).toHaveCount(1);
     }
 
-    async checkCartTableProperties(index) {
+    async checkCartTableProperties(index: number) {
         await expect(this.rowsInCartTable.nth(index).filter({ has: this.page.locator('.Cart-Index') })).not.toBeEmpty();
         await expect(this.rowsInCartTable.nth(index).filter({ has: this.page.locator('.Cart-Name') })).not.toBeEmpty();
         await expect(this.rowsInCartTable.nth(index).filter({ has: this.page.locator('.Cart-Price') })).not.toBeEmpty();
@@ -139,7 +145,7 @@ export class ExampleStore {
         await expect(this.rowsInCartTable.nth(index).filter({ has: this.page.locator('.Cart-Total') })).not.toBeEmpty();
     }
 
-    async addItemToCart(index) {
+    async addItemToCart(index: number) {
         await this.gotoCatalogPage();
         await this.cardLinks.nth(index).click();
         await this.addToCartBtn.click();

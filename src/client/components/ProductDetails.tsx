@@ -27,18 +27,18 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
                 <Image />
             </div>
             <div className="col-12 col-sm-7 col-lg-6">
-                <h1 className={bem("Name")}>{product.name}</h1>
-                <p className={bem("Description")}>{product.description}</p>
-                <p className={bem("Price", ['fs-3'])}>${product.price}</p>
+                <h1 data-testid={`${product.id}_productName`} className={bem("Name")}>{product.name}</h1>
+                <p data-testid={`${product.id}_productDescription`} className={bem("Description")}>{product.description}</p>
+                <p data-testid={`${product.id}_productPrice`} className={bem("Price", ['fs-3'])}>${product.price}</p>
                 <p>
-                    <button className={bem("AddToCart", ['btn', 'btn-primary', btnSizeClass])} onClick={onClick}>Add to Cart</button>
+                    <button data-testid={`${product.id}_addToCartBtn`} className={bem("AddToCart", ['btn', 'btn-primary', btnSizeClass])} onClick={onClick}>Add to Cart</button>
                     <CartBadge id={product.id} />
                 </p>
                 <dl>
                     <dt>Color</dt>
-                    <dd className={bem("Color", ['text-capitalize'])}>{product.color}</dd>
+                    <dd data-testid={`${product.id}_productColor`} className={bem("Color", ['text-capitalize'])}>{product.color}</dd>
                     <dt>Material</dt>
-                    <dd className={bem("Material", ['text-capitalize'])}>{product.material}</dd>
+                    <dd data-testid={`${product.id}_productMaterial`} className={bem("Material", ['text-capitalize'])}>{product.material}</dd>
                 </dl>
             </div>
         </div>

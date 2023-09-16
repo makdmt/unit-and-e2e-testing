@@ -84,3 +84,13 @@ export const mockedProducts = [
         "name": "Small Bacon",
         "price": 873
     }] 
+
+
+    export const mockedProductDetails = {
+            "id": 0,
+            "name": "Handmade Shirt",
+            "description": "Carbonite web goalkeeper gloves are ergonomically designed to give easy fit",
+            "price": 160,
+            "color": "orange",
+            "material": "Granite"
+    }
